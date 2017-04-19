@@ -52,7 +52,7 @@ cc.price = 125.66
 
 puts "The new price for the ticket at #{th.venue} is $#{th.price}"
 puts "The new price for the ticket at #{cc.venue} is $#{cc.price}"
-=end
+
 
 # This new code uses the attr_reader/writer methods instead of doing it the long way like above
 
@@ -82,3 +82,46 @@ cc.price = 125.66
 
 puts "The new price for the ticket at #{th.venue} is $#{th.price}"
 puts "The new price for the ticket at #{cc.venue} is $#{cc.price}"
+
+=end
+
+# the following is experiment of above material not from book
+class Car
+  attr_reader :make, :model, :year, :color
+  attr_accessor :cost, :condition  # I originally had this as attr_writer but was getting error undefined method when trying to print cost + condition
+  def initialize(make, model, year, color)
+    @make = make
+    @model = model
+    @year = year
+    @color = color
+  end
+end
+
+car1 = Car.new("Toyota", "Camry", 1990, "brown")
+car2 = Car.new("Dodge", "Neon", 2000, "silver")
+car3 = Car.new("Chevy", "Camaro", 1976, "blue")
+
+car1.cost = 1990
+car1.condition = "fair"
+car2.cost = 1295
+car2.condition = "crappy"
+car3.cost =  7995
+car3.condition = "mint"
+
+puts "The car is a #{car1.color} #{car1.year} #{car1.make} #{car1.model}. It is in #{car1.condition} condition and is priced at $#{car1.cost}."
+puts "The car is a #{car2.color} #{car2.year} #{car2.make} #{car2.model}. It is in #{car2.condition} condition and is priced at $#{car2.cost}."
+puts "The car is a #{car3.color} #{car3.year} #{car3.make} #{car3.model}. It is in #{car3.condition} condition and is priced at $#{car3.cost}."
+
+class Truck < Car
+  attr_reader :bed_length
+  attr_accessor :tow_capacity
+  def initialize(make, model, year, color, bed_length)
+    super(make, model, year, color)
+    @bed_length = bed_length
+  end
+end
+
+truck1 = Truck.new("Toyota", "Tundra", 2010, "black", 12)
+truck1.tow_capacity = 2230
+
+puts "The truck is a #{truck1.color} #{truck1.year} #{truck1.make} #{truck1.model} with a bed length of #{truck1.bed_length} ft and tow capacity of #{truck1.tow_capacity} lbs"
