@@ -30,9 +30,10 @@ puts taken
 
 puts "Now on the stack: "
 puts s.stack
-=end
+
 
 class Suitcase
+  # this is a barebones class, a stub or placeholder, that lets us create suitcases to put in the cargohold defined next
 end
 
 class CargoHold
@@ -41,7 +42,7 @@ class CargoHold
     print "Loading object: "
     puts obj.object_id
 
-    add_to_stack(obj)
+    add_to_stack(obj)  # this is a method from the Stacklike module
   end
   def unload         # we use the take_from_stack method from Stacklike but wrap it in a new method with a better name
     take_from_stack  # this is the method from Stacklike module, wrapped in different method name
@@ -65,4 +66,56 @@ ch.load_and_report(sc3)
 first_unloaded = ch.unload
 print "The first suitcase off the plane is : "
 puts first_unloaded.object_id
+=end
+
+class Person
+  PEOPLE = []
+  attr_reader :name, :hobbies, :friends
+  def initialize(name)
+    @name = name
+    @hobbies = []
+    @friends = []
+    PEOPLE << self
+  end
+  def has_hobby(hobby)
+    @hobbies << hobby
+  end
+  def has_friend(friend)
+    @friends << friend
+  end
+
+
+  def self.method_missing(m, *args)
+    method = m.to_s
+    if method.start_with?("all_with_")
+      attr = method[9..-1]   # takes the substring that lies within the 9th through last character positions
+      if self.public_method_defined?(attr)
+        PEOPLE.find_all do |person|
+          person.send(attr).include?(args[0])
+        end
+      else
+        raise ArgumentError, "Can't find #{attr}"
+      end
+    else
+      puts "ERROR"
+      super
+    end
+  end
+end
+
+j = Person.new("John")
+p = Person.new("Paul")
+g = Person.new("George")
+r = Person.new("Ringo")
+j.has_friend(p)
+j.has_friend(g)
+g.has_friend(p)
+r.has_hobby("rings")
+
+Person.all_with_friends(p).each do |person|
+  puts "#{person.name} is friends with #{p.name}"
+end
+Person.all_with_hobbies("rings").each do |person|
+  puts "#{person.name} is into rings"
+end
 
