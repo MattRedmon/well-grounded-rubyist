@@ -1,0 +1,94 @@
+CHAPTER 5
+THE DEFAULT OBJECT (SELF), SCOPE, AND VISIBILITY
+
+
+
+5.1 Understanding self, the current/default object
+
+What is the default or current object called?
+
+How many current ojbects can there be at any one time?
+
+How is the currect object determined? (list of 4 contexts, 121)
+
+What is the top level context called?
+
+When is the top level context active or the current object?
+
+Describe a situation where he code would be in the top level context.
+
+If you want to grab the top level context for any reason how is it done? (123 top)
+
+What is self in a class or module definition? (123, mid)
+
+Describe what's going on in the following code.
+class C
+ puts "Just started class C:"
+ puts self
+ module M
+ puts "Nested module C::M:"
+ puts self
+ end
+ puts "Back in the outer level of C:"
+ puts self
+end
+
+What is self in an instance method definition and why is is complicated? (124 top)
+  *obj that calls the method
+
+Describe the following code?
+class C
+ def x
+ puts "Class C, method x:"
+ puts self
+ end
+end
+c = C.new
+c.x
+puts "That was a call to x by: #{c}"
+
+What is a singleton method on a class object?
+
+How would you change a singleton method on a class object to a class instance method (124 bot)?
+
+Describe the code:
+obj = Object.new
+def obj.show_me
+ puts "Inside singleton method show_me of #{self}"
+end
+obj.show_me
+puts "Back from call to show_me by #{obj}"
+
+Where can we use self in the following in code?
+class C
+ def C.x
+ puts "Class method of class C"
+ puts "self: #{self}"
+ end
+end
+C.x
+
+And why might it be wise to use self instead of Class object name? (125 bot)
+
+Who is the default receiver of messages? (126)
+
+What is a bare or bareword identifier?
+
+What happens if you have a method and a variable of the same name and you use the bare identifier? (126)
+
+What is the most common use of the dotless (bare) method call?
+
+What is the rule for resolving instance variables through self? (128 mid)
+
+What happens with this code?
+class C
+ def show_var
+ @v = "I am an instance variable initialized to a string."
+ puts @v
+ end
+ @v = "Instance variables can appear anywhere...."
+end
+C.new.show_var
+
+5.2 Scope
+
