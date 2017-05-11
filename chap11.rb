@@ -55,7 +55,7 @@ string = "ABCabc123 is a hot mess"
 p string =~ /[^A-Za-z0-9]/  # returns 9, position of first blank space
 # with carat at beginning this says anything other that letter or number so
 # position of space is what's returned
-=end
+
 
 ##  there are special escape sequences for common character classes
 ##  /\d/ -->  matches any digit
@@ -78,5 +78,21 @@ p /\W/.match("@$@")  # returns <MatchData "@">
 
 p /\s/.match("   ")  # returns <MatchData " ">
 p /\S/.match("   ")  # returns nil
+=end
 
+##  these patterns are essentially true/false tests, either there is match or there isn't
+##  a MatchData object is returned or nil
+##  regex.match(string)
+##  string.match(regex)
 
+##  use of the match operator =~ is also essentially true/false test
+##  returning either numeric position of first match or nil
+
+##  rather that true/false testing you can "capture" matches using parenthesis
+##  parens allow you to isolate and save substrings of the string
+##  that match particular subpatterns
+
+p /([a-z])/.match("123abc")  # returns <MatchData "a" 1:"a">
+puts $1  # returns a
+# the parens around [a-z] automatically populates a series of variables giving us access to the submatches
+# Ruby populates them as global variables with pattern: $1, $2, $3, and so on
